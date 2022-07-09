@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tasklist extends Model
+class Task extends Model
 {
     //
 }
