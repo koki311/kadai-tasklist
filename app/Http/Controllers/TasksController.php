@@ -11,7 +11,10 @@ class TasksController extends Controller
 
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = [];
+        if(\Auth::check()){
+            $tasks = \Auth::user()->tasklists()->orderBy('created_at','desc')->paginate(10);
+        }
         return view('tasks.index',['tasks'=>$tasks]);
     }
 
