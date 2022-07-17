@@ -3,9 +3,6 @@
 
 Route::get('/', 'TasksController@index');
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 Route::resource('tasks', 'TasksController');
 
@@ -18,6 +15,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 //認証付きルーティング(https://laraweb.net/practice/1854/)
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('users','Controller',['only'=>['index','show']]);
-    Route::resource('tasks', 'TasksController', ['only' => ['store', 'destroy']]);
+    Route::resource('tasks','TasksController',['only'=>['index','show','create','edit']]);
 });
