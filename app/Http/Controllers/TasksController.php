@@ -34,7 +34,6 @@ class TasksController extends Controller
             'status' => 'required|max:10',
         ]);
         
-        
         $task = new Task;
         $task->content = $request->content;
         $task->status = $request->status;
@@ -43,39 +42,31 @@ class TasksController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show($id)
     {
         $task = Task::findOrFail($id);
-        return view('tasks.show',['task'=>$task,]);
+        
+        if(\Auth::id() === $task->user_id){
+                return view('tasks.show',['task'=>$task,]);
+        }
+        return redirect('/');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $task = Task::findOrFail($id);
+        
+        if(\Auth::id() === $task ->user_id){
         return view('tasks.edit', [
             'task' => $task,
         ]);
+        }
+        return redirect('/');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         
@@ -92,16 +83,14 @@ class TasksController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
+
+        if(\Auth::id() === $task ->user_id){
         $task->delete();
+        }
         return redirect('/');
     }
 }
